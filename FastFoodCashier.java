@@ -31,8 +31,9 @@ public class FastFoodCashier {
                 utils.clearConsole();
                 System.out.println("- - ADMIN LOG IN - -");
                 System.out.println("Please enter the admin password: "); //if right password it goes to ADMIN interface
-
                 adminMenu.adminMenuInterface(scan);
+                order.clearOrder();
+                ordering = false;
             }
 
             while (ordering) {
