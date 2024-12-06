@@ -25,8 +25,7 @@ public class Utils {
             for (int i = 0; i < seconds; i++) {
                 System.out.print(". ");
                 Thread.sleep(1000);
-        }
-            ; // Convert seconds to milliseconds
+        } // Convert seconds to milliseconds
         } catch (InterruptedException e) {
             System.out.println("Sleep interrupted: " + e.getMessage());
             Thread.currentThread().interrupt(); // Preserve the interrupt status

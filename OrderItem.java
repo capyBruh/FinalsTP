@@ -1,6 +1,6 @@
 public class OrderItem {
-    private String name;
-    private double price;
+    private final String name;
+    private final double price;
 
     public OrderItem(String name, double price) {
         this.name = name;
@@ -17,6 +17,6 @@ public class OrderItem {
 
     @Override
     public String toString() {
-        return name + " - $" + String.format("%.2f", price);
+        return name + " - P" + String.format("%.2f", price);
     }
 }
