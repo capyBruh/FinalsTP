@@ -10,10 +10,10 @@ static boolean ordering = true;
         static Order order = new Order();  
         static Utils utils = new Utils();
     public static void main(String[] args) {
-        
-        initializeMenu(); //initializes menu from the menu.txt file
-
+        initializeMenu();
         while (true) { 
+            
+             //initializes menu from the menu.txt file
             ordering = true;
             utils.clearConsole();
             System.out.println("Welcome to CRAZY RAPID FOODS!!!");
@@ -131,7 +131,7 @@ static boolean ordering = true;
         }
 
         System.out.println("----------------------------");
-    }    
+    }
 
     public static void displayMeals() {
         System.out.println("Meals: ");
