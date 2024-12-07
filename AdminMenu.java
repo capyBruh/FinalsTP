@@ -9,23 +9,23 @@ public class AdminMenu {
     boolean ordering = true;
 
     public AdminMenu(ArrayList<OrderItem> menu, ArrayList<OrderItem> meals, ArrayList<OrderItem> drinks, ArrayList<OrderItem> combos) {
-        // Initialize lists if they are null
-        this.menu = menu;
+        this.menu = menu; //initializes all the menu and categories from FastFoodCashier class
         this.meals = meals;
         this.drinks = drinks;
         this.combos = combos;
     }
 
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+    /* admin menu interface methods */
 
     public void adminMenuInterface(Scanner scan){
         utils.clearConsole();
-        String currentPassword = PasswordManager.loadAdminPassword();
+        String currentPassword = PasswordManager.loadAdminPassword(); //loads the password file
         System.out.println("--------ADMIN LOG IN-------");
         System.out.println("Please enter the admin PASSWORD: ");
         
-        
-        if(scan.next().equalsIgnoreCase(currentPassword)){
-            adminMenuChoices(scan);
+        if(scan.next().equalsIgnoreCase(currentPassword)){  //checks if the password is correct from the file
+            adminMenuChoices(scan); //jumps to admin menu choices
         } else {
             System.out.println("Incorrect admin PASSWORD");
             System.out.println("Returning to Main Menu");
@@ -45,14 +45,13 @@ public class AdminMenu {
                 System.out.println("4. Change admin password");
                 System.out.println("5. Return to Main Menu");
 
-            
                 String choice = scan.next();
                 switch (choice) {
                     case "1" -> {
                         utils.clearConsole();
-                        System.out.println("-------Adding New Item to the Menu-------");
+                        System.out.println("-------Adding New Item to the Menu-------"); //adding interface
                         System.out.println();
-                        addItemToMenu(scan);
+                        addItemToMenu(scan); //jumps to the given method
                     }
                     case "2" -> {
                         utils.clearConsole();
@@ -90,7 +89,8 @@ public class AdminMenu {
         }
     }
 
-
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+    /* adding items in menu method interfaces */
 
     public void addItemToMenu(Scanner scan) {
         while (true) {
@@ -102,18 +102,15 @@ public class AdminMenu {
             System.out.println("5. Back to Admin Menu");
     
             try {
-                String category = scan.next().trim(); // Consume newline
-                // Display the corresponding category before proceeding
+                String category = scan.next().trim();
                 if(category.equals("5")){
-                    System.out.println("Returning to Admin Menu...");
+                    System.out.println("Returning to Admin Menu..."); //breaks the add to menu interface loop if "5"
                     utils.sleep(3);
                     return;
                 }
-                addToMenuChoices(scan, category);
-
-                // Proceed to get the item details if a valid category is chosen
+                addToMenuChoices(scan, category); //a switch method output of the selection
             } catch (InputMismatchException e) {
-                scan.nextLine(); // Clear invalid input
+                scan.nextLine(); // clears invalid input
                 System.out.println("Invalid input, item not added.");
             }
         }
@@ -123,75 +120,76 @@ public class AdminMenu {
         switch (category) {
             case "1" -> {
                 System.out.println("\nCurrent Meals:");
-                FastFoodCashier.displayMeals(); // Show existing meals
-                addingItem(scan, category);
+                FastFoodCashier.displayMeals(); // displays existing meals
+                addingItem(scan, category); //method to add the item in the menu file
             }
             case "2" -> {
                 System.out.println("\nCurrent Drinks:");
-                FastFoodCashier.displayDrinks(); // Show existing drinks
-                addingItem(scan, category);
+                FastFoodCashier.displayDrinks(); // displays  existing drinks
+                addingItem(scan, category); //method to add the item in the menu file
             }
             case "3" -> {
                 System.out.println("\nCurrent Combo Meals:");
-                FastFoodCashier.displayCombos(); // Show existing combos
-                addingItem(scan, category);
+                FastFoodCashier.displayCombos(); // displays existing combos
+                addingItem(scan, category); //method to add the item in the menu file
             }
             case "4" -> {
                 utils.clearConsole();
-                System.out.println("Current Menu:");
+                System.out.println("Current Menu:"); //prints all the menu
                 FastFoodCashier.displayMenu();
                 System.out.print("\n Press Enter to return to the Admin Menu...");
                 scan.nextLine();
-                scan.nextLine(); // Wait for user input
+                scan.nextLine(); // wait for user input
                 utils.clearConsole();
                 return;
             }
             default -> {
                 System.out.println("Invalid category.");
-                return; // Skip to the next loop iteration
+                return; // skip to the next loop iteration
             }
         }
     }
 
     private void addingItem(Scanner scan, String category){
-        System.out.print("\nEnter the name of the new item: ");
+        System.out.print("\nEnter the name of the new item: "); //asks for the item name
         scan.nextLine();
         String name = scan.nextLine();
-        System.out.print("Enter the price of the new item: ");
+        System.out.print("Enter the price of the new item: "); //asks for item price
         double price = scan.nextDouble();
-        scan.nextLine(); // Consume newline
+        scan.nextLine(); 
 
         OrderItem newItem = new OrderItem(name, price);
         switch (category) {
             case "1" -> {
-                MenuManager.meals.add(newItem);
+                MenuManager.meals.add(newItem); //adds the inputted item to the meals category in the file
                 utils.clearConsole();
                 System.out.println(name + " has been added to the menu.");
                 System.out.println("\nUpdated Meals:");
-                FastFoodCashier.displayMeals();
+                FastFoodCashier.displayMeals(); //displays the meals
                 System.out.println();
             }
             case "2" -> {
-                MenuManager.drinks.add(newItem);
+                MenuManager.drinks.add(newItem); //adds the inputted item to the meals category in the file
                 utils.clearConsole();
                 System.out.println(name + " has been added to the menu.");
                 System.out.println("\nUpdated Drinks:");
-                FastFoodCashier.displayDrinks();
+                FastFoodCashier.displayDrinks(); //displays the drinks
                 System.out.println();
             }
             case "3" -> {
-                MenuManager.combos.add(newItem);
+                MenuManager.combos.add(newItem); //adds the inputted item to the meals category in the file
                 utils.clearConsole();
                 System.out.println(name + " has been added to the menu.");
                 System.out.println("\nUpdated Combo Meals:");
-                FastFoodCashier.displayCombos();
+                FastFoodCashier.displayCombos(); //displays the combos
                 System.out.println();
             }
         }
         MenuManager.saveMenu(); // Save the updated menu
     }
 
-
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+    /* removing items in menu method interfaces */
 
     public void deleteItemFromMenu(Scanner scan) {
         while (true) {
@@ -260,7 +258,8 @@ public class AdminMenu {
         }
     }
 
-
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+    /* changing the password method interfaces */
 
     private void changeAdminPassword(Scanner scan) {
 

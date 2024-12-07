@@ -2,14 +2,14 @@
 import java.io.IOException;
 
 public class Utils {
-    public void clearConsole() {
+    public void clearConsole() { //for clearing the console
         try {
             // For Windows systems
             if (System.getProperty("os.name").contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
                 // For Unix-based systems
-                System.out.print("\033[H\033[2J");
+                System.out.print("\033[H\033[2J"); 
                 System.out.flush();
             }
         } catch (IOException | InterruptedException e) {
@@ -20,15 +20,15 @@ public class Utils {
         }
     }
 
-    public void sleep(int seconds) {
+    public void sleep(int seconds) { //loading dots
         try {
             for (int i = 0; i < seconds; i++) {
                 System.out.print(". ");
-                Thread.sleep(1000);
-        } // Convert seconds to milliseconds
+                Thread.sleep(1000); // converts seconds to milliseconds
+        } 
         } catch (InterruptedException e) {
             System.out.println("Sleep interrupted: " + e.getMessage());
-            Thread.currentThread().interrupt(); // Preserve the interrupt status
+            Thread.currentThread().interrupt(); // preserve the interrupt status
         }
     }
 }

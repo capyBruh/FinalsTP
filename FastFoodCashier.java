@@ -11,8 +11,6 @@ static boolean ordering = true;
         static Utils utils = new Utils();
     public static void main(String[] args) {
         
-
-        // Initialize the menu
         initializeMenu(); //initializes menu from the menu.txt file
 
         while (true) { 
@@ -24,19 +22,19 @@ static boolean ordering = true;
             name = scan.next().trim();
             order.setName(name); // setting the name of the customer
 
-            checkAdminLogin(); //checks if the input given is name
+            checkAdminLogin(); //checks if the input given is "admin" as name  
 
             while (ordering) {
                 displayMenu();
                 order.displayOrderSummary();
-                addItems();
+                addItems(); 
 
                 System.out.print("\nAdd another item? (yes/no): "); //asks for another order
                 scan.nextLine();
                 String response = scan.nextLine().trim();
-                if (!response.equalsIgnoreCase("yes")) {
+                if (!response.equalsIgnoreCase("yes")) { // if not yes then goes to order confirmation
                     order.displayOrderSummary();
-                    orderConfirmation();
+                    orderConfirmation(); // gives the user choices to do before confirming
                 }
                 utils.clearConsole();
             }
@@ -46,8 +44,8 @@ static boolean ordering = true;
     public static void checkAdminLogin(){
         if(name.equalsIgnoreCase("admin")){ //checks if the name is admin
             utils.clearConsole();
-            System.out.println("-------ADMIN LOG IN-------");//if right password it goes to ADMIN interface
-            adminMenu.adminMenuInterface(scan);
+            System.out.println("-------ADMIN LOG IN-------");
+            adminMenu.adminMenuInterface(scan); //jumps to admin interface and checks if the password is right
             order.clearOrder();
             ordering = false;
         }
@@ -58,19 +56,16 @@ static boolean ordering = true;
         try {
             
             int itemChoice = scan.nextInt();
-            if (itemChoice < 1 || itemChoice > MenuManager.menu.size()) {
+            if (itemChoice < 1 || itemChoice > MenuManager.menu.size()) { //checks the if the item choice is less or more than the menu
                 System.out.println("Invalid choice! Please select a valid menu item.");
                 return;
             }
-    
-            // If input is valid, add the item to the order
             order.addItem(MenuManager.menu.get(itemChoice - 1)); // Adds the item to the order list
             utils.clearConsole();
-            System.out.println(MenuManager.menu.get(itemChoice - 1).getName() + " has been added to your order!");
+            System.out.println(MenuManager.menu.get(itemChoice - 1).getName() + " has been added to your order!"); //prints the item that is added
     
         } catch (InputMismatchException e) {
-            // Catch invalid number input
-            System.out.println("Invalid input! Please enter a valid number.");
+            System.out.println("Invalid input! Please enter a valid number."); // catch invalid number input
         }
     }
 
@@ -84,25 +79,24 @@ static boolean ordering = true;
             String confirm = scan.next().trim().toLowerCase();
             switch (confirm) {
                 case "1" -> {
-                    //confirmation of order that prints receipt
-                    utils.clearConsole();
-                    order.printReceipt();
+                    utils.clearConsole(); //confirmation of order that prints receipt
+                    order.printReceipt(); //also checks if the total order is zero 
                     System.out.print("\nPress Enter to continue: ");//clears everything after getting the receipt
                     scan.nextLine();
                     scan.nextLine();
-                    utils.clearConsole();
-                    order.clearOrder();
+                    utils.clearConsole(); 
+                    order.clearOrder(); // clears order after 
                     confirmation = false;
                     ordering = false;
                 }
-                case "2" -> //adds new order by breaking the confirmation loop
-                    confirmation = false;
+                case "2" -> 
+                    confirmation = false; //adds new order by breaking the confirmation loop and going to ordering loop
                 case "3" -> {
                     //clears everything without receipt
                     System.out.println("Order cancelled.");
                     utils.sleep(3);
-                    utils.clearConsole();
-                    order.clearOrder();
+                    utils.clearConsole(); 
+                    order.clearOrder(); // clears the order and not printing the receipt
                     confirmation = false;
                     ordering = false;
                 }
@@ -115,8 +109,8 @@ static boolean ordering = true;
 
     public static void initializeMenu() {
         utils.clearConsole();
-        MenuManager.loadMenu(); // Load the menu from the text file
-        System.out.println("Menu file found.");
+        MenuManager.loadMenu(); // loads the menu from the text file
+        System.out.println("Menu file found."); 
         utils.sleep(3);
     }
     
@@ -125,15 +119,15 @@ static boolean ordering = true;
         System.out.println("\n----------Menu----------:");
         System.out.println("Meals: ");
         for (int i = 0; i < MenuManager.meals.size(); i++) {
-            System.out.println((i + 1) + ". " + MenuManager.meals.get(i));
+            System.out.println((i + 1) + ". " + MenuManager.meals.get(i)); //displays the meals in menu
         }
         System.out.println("Drinks: ");
         for (int i = 0; i < MenuManager.drinks.size(); i++) {
-            System.out.println((i + 1 + MenuManager.meals.size()) + ". " + MenuManager.drinks.get(i));
+            System.out.println((i + 1 + MenuManager.meals.size()) + ". " + MenuManager.drinks.get(i)); //displays the drinks in menu
         }
         System.out.println("Combos: ");
         for (int i = 0; i < MenuManager.combos.size(); i++) {
-            System.out.println((i + 1 + MenuManager.meals.size() + MenuManager.drinks.size()) + ". " + MenuManager.combos.get(i));
+            System.out.println((i + 1 + MenuManager.meals.size() + MenuManager.drinks.size()) + ". " + MenuManager.combos.get(i)); //displays combos in menu
         }
 
         System.out.println("----------------------------");
